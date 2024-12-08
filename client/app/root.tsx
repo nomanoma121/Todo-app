@@ -74,6 +74,7 @@ export default function App() {
   console.log("apiUrl", apiUrl);
   console.log(loaderData.message);
   console.log(loaderData);
+  
   return (
     <html>
       <head>
