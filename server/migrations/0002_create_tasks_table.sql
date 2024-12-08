@@ -1,0 +1,7 @@
+-- Migration number: 0002 	 2024-11-19T05:55:48.553Z
+CREATE TABLE tasks (
+  id INTEGER PRIMARY KEY AUTOINCREMENT,
+  userid INTEGER NOT NULL,
+  task TEXT NOT NULL,
+  completed INTEGER NOT NULL
+);

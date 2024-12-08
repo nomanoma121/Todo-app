@@ -1,0 +1,8 @@
+name = "todo-app-server"
+main = "src/index.ts"
+compatibility_date = "2024-12-08"
+
+[[d1_databases]]
+binding = "DB"
+database_name = "todos"
+database_id = "aa80297c-058c-445b-b28b-3fe5b2c66155"
