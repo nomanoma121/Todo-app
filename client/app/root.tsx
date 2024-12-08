@@ -11,12 +11,12 @@ import { ActionFunctionArgs } from "@remix-run/node";
 import Header from "./Header";
 
 //Header.tsxからPOST
-export const action = async ({ request, context }: ActionFunctionArgs) => {
+export const action = async ({ request }: ActionFunctionArgs) => {
   const formData = await request.formData();
   const actionType = formData.get("actionType");
   const registername = formData.get("register");
   const searchname = formData.get("search");
-  const apiUrl = context.cloudflare.env.API_URL;
+  const apiUrl = process.env.API_URL;
 
   if (actionType == "register") {
     // ユーザー登録
@@ -65,11 +65,11 @@ export const action = async ({ request, context }: ActionFunctionArgs) => {
   return null;
 };
 
-export const loader = async ({ context }) => {
-  const apiUrl = context.cloudflare.env.API_URL;
+export const loader = async () => {
+  const apiUrl = process.env.API_URL;
   console.log("apiUrl", apiUrl);
   try {
-    const response = await fetch(`https://todo-app-server.takeuchi180121.workers.dev/`);
+    const response = await fetch(`${apiUrl}`);
     const data = await response.json();
     return json({ data });
   } catch (err) {
