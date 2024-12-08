@@ -1,14 +1,22 @@
-import { Links, Meta, Scripts, Outlet, redirect, json, useLoaderData } from "@remix-run/react";
+import {
+  Links,
+  Meta,
+  Scripts,
+  Outlet,
+  redirect,
+  json,
+  useLoaderData,
+} from "@remix-run/react";
 import { ActionFunctionArgs } from "@remix-run/node";
-import { apiUrl } from "../config";
 import Header from "./Header";
 
 //Header.tsxからPOST
-export const action = async ({ request }: ActionFunctionArgs) => {
+export const action = async ({ request, context }: ActionFunctionArgs) => {
   const formData = await request.formData();
   const actionType = formData.get("actionType");
   const registername = formData.get("register");
   const searchname = formData.get("search");
+  const apiUrl = context.cloudflare.env.API_URL;
 
   if (actionType == "register") {
     // ユーザー登録
@@ -39,15 +47,13 @@ export const action = async ({ request }: ActionFunctionArgs) => {
     }
     // ユーザー検索
   } else if (actionType == "search") {
-    const response = await fetch(
-      `${apiUrl}/api/search`,{
+    const response = await fetch(`${apiUrl}/api/search`, {
       method: "POST",
       body: JSON.stringify({ searchname: searchname }),
       headers: {
         "Content-Type": "application/json",
       },
-    }
-    );
+    });
     const data = await response.json();
 
     if (response.ok) {
@@ -59,22 +65,22 @@ export const action = async ({ request }: ActionFunctionArgs) => {
   return null;
 };
 
-export const loader = async () => {
+export const loader = async ({ context }) => {
+  const apiUrl = context.cloudflare.env.API_URL;
+  console.log("apiUrl", apiUrl);
   try {
-  const response = await fetch(`${apiUrl}`);
-  const data = await response.json();
-  return json({ data });
+    const response = await fetch(`https://todo-app-server.takeuchi180121.workers.dev/`);
+    const data = await response.json();
+    return json({ data });
   } catch (err) {
-    return json({ message: err } , 500);
+    return json({ message: err }, 500);
   }
-}
+};
 
 export default function App() {
   const loaderData = useLoaderData();
-  console.log("apiUrl", apiUrl);
-  console.log(loaderData.message);
   console.log(loaderData);
-  
+
   return (
     <html>
       <head>
