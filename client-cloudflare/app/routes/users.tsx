@@ -1,8 +1,9 @@
+import { LoaderFunction, LoaderFunctionArgs } from "@remix-run/cloudflare";
 import { json, useLoaderData } from "@remix-run/react";
 
 // `loader` 関数でデータを取得する
-export const loader = async () => {
-  const apiUrl = process.env.API_URL;
+export const loader = async ({ context }: LoaderFunctionArgs) => {
+  const apiUrl = context.cloudflare.API_URL;
   const response = await fetch(`${apiUrl}/api/get?table='users'`);
   const data = await response.json();
   console.log("loader function running!!");

@@ -2,8 +2,8 @@ import { ActionFunctionArgs, LoaderFunctionArgs } from "@remix-run/node";
 import { Form, json, useActionData, useLoaderData, useLocation } from "@remix-run/react";
 import { useEffect, useState } from "react";
 
-export const loader = async ({ request }: LoaderFunctionArgs) => {
-  const apiUrl = process.env.API_URL;
+export const loader = async ({ request, context }: LoaderFunctionArgs) => {
+  const apiUrl = context.cloudflare.env.API_URL;
   const url = new URL(request.url);
   const username = url.pathname.replace(/^\/+/, "");
   const response = await fetch(`${apiUrl}/api/tasks?name=${username}`);
@@ -11,8 +11,8 @@ export const loader = async ({ request }: LoaderFunctionArgs) => {
   return json({ data });
 };
 
-export const action = async ({ request }: ActionFunctionArgs) => {
-  const apiUrl = process.env.API_URL;
+export const action = async ({ request, context }: ActionFunctionArgs) => {
+  const apiUrl = context.cloudflare.env.API_URL;
   const formData = await request.formData();
   const method = formData.get("_method");
 

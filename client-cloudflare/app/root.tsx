@@ -5,18 +5,17 @@ import {
   Outlet,
   redirect,
   json,
-  useLoaderData,
 } from "@remix-run/react";
 import { ActionFunctionArgs } from "@remix-run/node";
 import Header from "./Header";
 
 //Header.tsxからPOST
-export const action = async ({ request }: ActionFunctionArgs) => {
+export const action = async ({ request, context }: ActionFunctionArgs) => {
   const formData = await request.formData();
   const actionType = formData.get("actionType");
   const registername = formData.get("register");
   const searchname = formData.get("search");
-  const apiUrl = process.env.API_URL;
+  const apiUrl = context.cloudflare.env.API_URL;
 
   if (actionType == "register") {
     // ユーザー登録
