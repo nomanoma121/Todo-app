@@ -37,12 +37,14 @@ export const action = async ({ request }: ActionFunctionArgs) => {
       body: JSON.stringify({ registername: registername }),
     });
 
+    console.log(response);
+    console.log(response.ok);
+
     if (response.ok) {
       console.log("ユーザー登録に成功しました。");
       return redirect(`/${registername}`);
     } else {
       const data = await response.json();
-      console.log(data);
       return json({ message: data.message }, response.status);
     }
     // ユーザー検索
@@ -65,22 +67,7 @@ export const action = async ({ request }: ActionFunctionArgs) => {
   return null;
 };
 
-export const loader = async () => {
-  const apiUrl = process.env.API_URL;
-  console.log("apiUrl", apiUrl);
-  try {
-    const response = await fetch(`${apiUrl}`);
-    const data = await response.json();
-    return json({ data });
-  } catch (err) {
-    return json({ message: err }, 500);
-  }
-};
-
 export default function App() {
-  const loaderData = useLoaderData();
-  console.log(loaderData);
-
   return (
     <html>
       <head>
