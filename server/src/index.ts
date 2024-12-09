@@ -13,9 +13,8 @@ app.get("/", async (c: any) => {
 
 //ユーザー一覧を取得
 app.get("/api/users", async (c: any) => {
-  const table = await c.req.query("table");
   try {
-    const result = await c.env.DB.all("SELECT * FROM users");
+    const result = await c.env.DB.prepare("SELECT * FROM users").all();
     return c.json(result);
   } catch (err) {
     return c.json({ error: "データ取得エラー" });
