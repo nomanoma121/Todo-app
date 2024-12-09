@@ -88,7 +88,7 @@ export default function App() {
         <Meta />
         <Links />
       </head>
-      <body>
+      <body style={{backgroundColor: "#f8f9fa"}}>
         <div style={{padding: "0 100px"}}>
           <Header />
           <main>
