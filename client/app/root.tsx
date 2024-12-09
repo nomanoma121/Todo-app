@@ -88,14 +88,14 @@ export default function App() {
         <Meta />
         <Links />
       </head>
-      <body
-        style={{ margin: 0, backgroundColor: "#f8f9fa", padding: "0 100px" }}
-      >
-        <Header />
-        <main>
-          <Outlet />
-        </main>
-        <Scripts />
+      <body>
+        <div style={{padding: "0 100px"}}>
+          <Header />
+          <main>
+            <Outlet />
+          </main>
+          <Scripts />
+        </div>
       </body>
     </html>
   );
